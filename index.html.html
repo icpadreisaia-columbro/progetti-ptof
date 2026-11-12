@@ -1,0 +1,2619 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="briefing">
+  <title>PTOF A.S. 2026/2027 — IC «Padre Isaia Columbro» · Showcase Progetti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces: warm stone-white paper (Briefing) */
+      --background: #faf9f5;
+      --surface-container-low: #ffffff;
+      --surface-container: #f1efe8;
+      --surface-container-high: #e6e2d6;
+
+      /* Ink */
+      --on-surface: #17181a;
+      --on-surface-variant: #56585c;
+
+      /* Rules */
+      --outline: #17181a;
+      --outline-variant: #dedad0;
+      --border-control: #c8c4b8;
+
+      /* Accents */
+      --primary: #17181a;
+      --on-primary: #faf9f5;
+      --primary-container: #f2b705;
+      --on-primary-container: #17181a;
+      --secondary: #1f4e5f;
+      --tertiary: #785008;
+      --error: #b42318;
+      --on-error: #ffffff;
+
+      /* Semantic & Tag washes */
+      --positive: #2b6e52;
+      --warning: #785008;
+      --focus: #1f4e5f;
+      --tag-warm-bg: #f5e6c4;
+      --tag-slate-bg: #e6eff2;
+      --tag-pine-bg: #e4efe9;
+      --tag-brick-bg: #f6e7e5;
+
+      /* Data series */
+      --data-1: #1f4e5f;
+      --data-2: #d99000;
+      --data-3: #2b6e52;
+      --data-4: #b84a39;
+      --data-context: #c4bfb2;
+
+      /* Fonts */
+      --font-headline: 'Source Serif 4', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-label: 'Geist Mono', monospace;
+
+      /* Shape */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.375rem;
+      --rounded-full: 0.25rem;
+      --badge-radius: 2px;
+
+      /* Style effects */
+      --section-rule: 1.5px solid var(--outline);
+      --card-border: 1px solid var(--outline-variant);
+      --heading-tracking: -0.02em;
+      --label-tracking: 0.08em;
+
+      /* Type scale (Dashboard / Data Explorer) */
+      --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.35rem);
+      --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.55rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+      max-width: 1240px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Focus rings */
+    :focus-visible {
+      outline: 2.5px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Dossier Section Bars */
+    .dossier-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-bottom: var(--section-rule);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .dossier-bar-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .dossier-pill {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.6875rem;
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+      padding: 0.25rem 0.55rem;
+      border-radius: var(--badge-radius);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .dossier-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Header */
+    .masthead {
+      padding-top: var(--space-sm);
+    }
+    .title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--display-size);
+      letter-spacing: var(--heading-tracking);
+      line-height: 1.08;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .standfirst {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: var(--subhead-size);
+      color: var(--secondary);
+      margin: var(--space-sm) 0 0 0;
+      max-width: 72ch;
+      line-height: 1.45;
+    }
+    .lead-note {
+      margin: var(--space-sm) 0 0 0;
+      color: var(--on-surface-variant);
+      font-size: 0.92rem;
+      max-width: 78ch;
+    }
+
+    /* KPI Summary Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .figure-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+    }
+    .kpi-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .index-num {
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: var(--label-size);
+      color: var(--secondary);
+      letter-spacing: 0.06em;
+    }
+    .kpi-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--on-surface-variant);
+    }
+    .figure-value {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: clamp(2rem, 1.6rem + 1vw, 2.5rem);
+      line-height: 1.05;
+      font-variant-numeric: lining-nums tabular-nums;
+      color: var(--on-surface);
+      margin: var(--space-xs) 0;
+    }
+    .kpi-sub {
+      font-size: 0.85rem;
+      color: var(--on-surface-variant);
+      line-height: 1.35;
+    }
+
+    /* Analytics Row */
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: stretch;
+    }
+    .panel-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--headline-size);
+      letter-spacing: var(--heading-tracking);
+      margin: 0 0 var(--space-xs) 0;
+      color: var(--on-surface);
+    }
+    .panel-sub {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-md) 0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .chart-wrap {
+      position: relative;
+      min-height: 290px;
+      width: 100%;
+    }
+    .chart-legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-sm);
+      padding-top: var(--space-sm);
+      border-top: var(--card-border);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: var(--badge-radius);
+      display: inline-block;
+    }
+    .swatch-curricolari { background: var(--data-1); }
+    .swatch-extracurricolari { background: var(--data-2); }
+
+    /* Campus Matrix */
+    .campus-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-sm);
+    }
+    .campus-btn {
+      width: 100%;
+      min-height: 44px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      color: var(--on-surface);
+      transition: background-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .campus-btn:hover {
+      background: var(--surface-container);
+    }
+    .campus-btn.is-active {
+      background: var(--tag-slate-bg);
+      box-shadow: inset 3px 0 0 var(--secondary);
+    }
+    .campus-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: block;
+    }
+    .campus-breakdown {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      display: block;
+    }
+    .campus-count {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.25rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--secondary);
+    }
+
+    /* Filter Control Deck */
+    .filter-deck {
+      background: var(--surface-container);
+      border-top: var(--section-rule);
+      border-bottom: var(--card-border);
+      padding: var(--space-lg);
+      border-radius: 0 0 var(--rounded-lg) var(--rounded-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .filter-top-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .segmented-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .control-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--on-surface);
+      display: block;
+    }
+    .segmented-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .seg-btn {
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--border-control);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .seg-btn:hover {
+      background: var(--surface-container-high);
+    }
+    .seg-btn[aria-pressed="true"] {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .filter-inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-select,
+    .field-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.5rem 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--on-surface);
+      background: var(--surface-container-low);
+      border: 1px solid var(--border-control);
+      border-radius: var(--rounded);
+      transition: box-shadow var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+    .field-select {
+      padding-right: 2rem;
+      cursor: pointer;
+    }
+    .field-select:hover,
+    .field-input:hover {
+      background: var(--background);
+    }
+
+    .filter-status-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--outline-variant);
+    }
+    .results-summary {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface);
+    }
+    .results-summary strong {
+      color: var(--secondary);
+    }
+    .filter-actions-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .btn-secondary {
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--border-control);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-container-high);
+    }
+    .btn-secondary:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* Macro-Area Quick Jump Pills */
+    .macro-pills-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      align-items: center;
+    }
+    .macro-pill-btn {
+      min-height: 44px;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .macro-pill-btn:hover {
+      background: var(--surface-container);
+    }
+    .macro-pill-btn[aria-pressed="true"] {
+      background: var(--secondary);
+      color: var(--on-primary);
+      border-color: var(--secondary);
+    }
+    .pill-count {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      opacity: 0.85;
+    }
+
+    /* Section Headings */
+    .section-header-block {
+      margin-bottom: var(--space-md);
+    }
+    .section-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--headline-size);
+      letter-spacing: var(--heading-tracking);
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .section-desc {
+      margin: var(--space-xs) 0 0 0;
+      color: var(--on-surface-variant);
+      font-size: 0.92rem;
+      max-width: 72ch;
+    }
+
+    /* Macro-Area Subsection Divider */
+    .macro-group {
+      margin-top: var(--space-xl);
+    }
+    .macro-group:first-child {
+      margin-top: 0;
+    }
+    .macro-group-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--section-rule);
+      margin-bottom: var(--space-md);
+    }
+    .macro-group-title-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+    }
+    .macro-group-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.25rem;
+      letter-spacing: var(--heading-tracking);
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .macro-group-count {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .project-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      transition: box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .project-card.is-extracurricolare {
+      border-top: 3px solid var(--primary-container);
+    }
+    .project-card:hover {
+      box-shadow: 0 4px 14px rgba(23, 24, 26, 0.06);
+    }
+
+    .card-meta-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+    .card-code {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--secondary);
+      letter-spacing: 0.05em;
+    }
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--rounded);
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .tag-extra {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .tag-curr {
+      background: var(--tag-slate-bg);
+      color: var(--secondary);
+    }
+    .tag-order {
+      background: var(--tag-warm-bg);
+      color: var(--tertiary);
+    }
+    .tag-area-1 { background: var(--tag-slate-bg); color: var(--data-1); }
+    .tag-area-2 { background: var(--tag-warm-bg); color: var(--tertiary); }
+    .tag-area-3 { background: var(--tag-brick-bg); color: var(--data-4); }
+    .tag-area-4 { background: var(--tag-pine-bg); color: var(--data-3); }
+    .tag-area-5 { background: var(--surface-container); color: var(--on-surface); }
+
+    .card-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.15rem;
+      line-height: 1.25;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .card-summary {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
+    .card-facts {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.35rem;
+      margin: var(--space-xs) 0 0 0;
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--outline-variant);
+      font-size: 0.85rem;
+    }
+    .fact-row {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: var(--space-sm);
+      align-items: baseline;
+    }
+    .fact-key {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--on-surface-variant);
+    }
+    .fact-val {
+      color: var(--on-surface);
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      padding-top: var(--space-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .expand-btn {
+      min-height: 44px;
+      padding: 0 var(--space-sm);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--background);
+      color: var(--secondary);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .expand-btn:hover {
+      background: var(--surface-container);
+    }
+    .card-details {
+      margin-top: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container);
+      border-left: 2px solid var(--secondary);
+      border-radius: 0 var(--rounded) var(--rounded) 0;
+      font-size: 0.85rem;
+      color: var(--on-surface);
+      display: none;
+    }
+    .card-details.is-open {
+      display: block;
+    }
+    .card-details p {
+      margin: 0 0 var(--space-xs) 0;
+    }
+    .card-details p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Synoptic Table View */
+    .table-wrap {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    thead th {
+      background: var(--surface-container);
+      border-bottom: var(--section-rule);
+      padding: 0.75rem 0.9rem;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface);
+      white-space: nowrap;
+    }
+    tbody td {
+      padding: 0.75rem 0.9rem;
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: top;
+    }
+    tbody tr:hover {
+      background: var(--background);
+    }
+    .sort-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      min-height: 32px;
+    }
+    .table-title-cell {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 0.98rem;
+      color: var(--on-surface);
+    }
+
+    /* Empty State */
+    .empty-state {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-2xl) var(--space-lg);
+      text-align: center;
+    }
+    .empty-state h3 {
+      font-family: var(--font-headline);
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 1.35rem;
+    }
+    .empty-state p {
+      margin: 0 auto var(--space-md) auto;
+      color: var(--on-surface-variant);
+      max-width: 48ch;
+    }
+
+    /* Methodology & Sources Footer */
+    .aside-box {
+      background: var(--surface-container);
+      border-top: var(--section-rule);
+      padding: var(--space-lg);
+      border-radius: 0 0 var(--rounded-lg) var(--rounded-lg);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+    .aside-box h3 {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 1.15rem;
+    }
+    .aside-box p {
+      margin: 0 0 var(--space-sm) 0;
+      font-size: 0.88rem;
+      color: var(--on-surface-variant);
+    }
+    .source-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      font-size: 0.86rem;
+      color: var(--on-surface-variant);
+    }
+    .source-list li {
+      margin-bottom: 0.25rem;
+    }
+
+    .is-hidden { display: none !important; }
+
+    @media (max-width: 960px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .analytics-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .filter-inputs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-lg);
+      }
+      .kpi-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .filter-inputs-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .fact-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+
+    <!-- HEADER / MASTHEAD -->
+    <header class="masthead">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">PTOF · A.S. 2026/2027</span>
+          <span class="dossier-meta">Cod. Mecc. BNIC834005 · Collegio dei Docenti · 6 Comuni</span>
+        </div>
+        <span class="dossier-meta">Aggiornamento: Novembre 2026</span>
+      </div>
+      <h1 class="title">Offerta Formativa PTOF 2026/2027 — IC «Padre Isaia Columbro»</h1>
+      <p class="standfirst">Showcase interattivo dell'ampliamento dell'offerta formativa: 51 progetti approvati per i plessi di Foglianise, Vitulano, Tocco Caudio, Cautano, Castelpoto e Campoli M.T.</p>
+      <p class="lead-note">Esplora l'architettura ufficiale dell'Istituto articolata in <strong>7 Progetti Extracurricolari</strong> e <strong>44 Progetti Curricolari</strong> distribuiti nelle <strong>5 Macro-Aree tematiche PTOF</strong>, filtrabili per tipologia, ordine di scuola, plesso comunale e parola chiave.</p>
+    </header>
+
+    <!-- KPI HEADLINE ROW -->
+    <section aria-label="Indicatori sintetici PTOF">
+      <div class="kpi-grid">
+        <div class="figure-card kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-label">Offerta Complessiva</span>
+            <span class="index-num">01</span>
+          </div>
+          <div class="figure-value">51</div>
+          <div class="kpi-sub">Progetti deliberati per l'A.S. 2026/2027 in tutti gli ordini di scuola</div>
+        </div>
+
+        <div class="figure-card kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-label">Extracurricolari</span>
+            <span class="index-num">02</span>
+          </div>
+          <div class="figure-value">7</div>
+          <div class="kpi-sub">Laboratori pomeridiani, pre-scuola e iniziative aperte al territorio</div>
+        </div>
+
+        <div class="figure-card kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-label">Curricolari</span>
+            <span class="index-num">03</span>
+          </div>
+          <div class="figure-value">44</div>
+          <div class="kpi-sub">Progetti integrati nelle 5 Macro-Aree tematiche del PTOF</div>
+        </div>
+
+        <div class="figure-card kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-label">Comunità Educante</span>
+            <span class="index-num">04</span>
+          </div>
+          <div class="figure-value">6</div>
+          <div class="kpi-sub">Plessi comunali: Tocco Caudio, Campoli M.T., Castelpoto, Cautano, Foglianise, Vitulano</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANALYTICS OVERVIEW: CHART + CAMPUS COVERAGE -->
+    <section aria-label="Distribuzione per Macro-Area e Plesso">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">Panoramica</span>
+          <span class="dossier-meta">Ripartizione per Macro-Area PTOF e copertura territoriale</span>
+        </div>
+      </div>
+
+      <div class="analytics-grid">
+        <div class="figure-card">
+          <h2 class="panel-title">Progetti nelle 5 Macro-Aree Tematiche PTOF</h2>
+          <p class="panel-sub">Clicca su una barra per filtrare i progetti dell'area selezionata</p>
+          <div class="chart-wrap">
+            <canvas id="macroAreaChart" aria-label="Grafico distribuzione progetti nelle 5 Macro-Aree PTOF"></canvas>
+          </div>
+          <div class="chart-legend-row">
+            <span class="legend-item"><span class="legend-swatch swatch-curricolari" aria-hidden="true"></span> Curricolari (44)</span>
+            <span class="legend-item"><span class="legend-swatch swatch-extracurricolari" aria-hidden="true"></span> Extracurricolari (7)</span>
+          </div>
+        </div>
+
+        <div class="figure-card">
+          <h2 class="panel-title">Attivazione per Plesso Comunale</h2>
+          <p class="panel-sub">Seleziona un comune per filtrare l'offerta disponibile in sede</p>
+          <div class="campus-list" id="campus-matrix">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE FILTER DECK -->
+    <section aria-label="Filtri interattivi dei progetti">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">Esplora</span>
+          <span class="dossier-meta">Filtri combinati per tipologia, area tematica, ordine e plesso</span>
+        </div>
+      </div>
+
+      <div class="filter-deck">
+        <div class="filter-top-row">
+          <div class="segmented-group">
+            <span class="control-label">Tipologia Offerta Formativa</span>
+            <div class="segmented-buttons" role="group" aria-label="Filtra per tipologia di progetto">
+              <button type="button" class="seg-btn" id="btn-type-all" aria-pressed="true" onclick="setTypeFilter('all')">Tutti (51)</button>
+              <button type="button" class="seg-btn" id="btn-type-extra" aria-pressed="false" onclick="setTypeFilter('extracurricolare')">Extracurricolari (7)</button>
+              <button type="button" class="seg-btn" id="btn-type-curr" aria-pressed="false" onclick="setTypeFilter('curricolare')">Curricolari (44)</button>
+            </div>
+          </div>
+
+          <div class="segmented-group">
+            <span class="control-label">Modalità di Visualizzazione</span>
+            <div class="segmented-buttons" role="group" aria-label="Cambia visualizzazione">
+              <button type="button" class="seg-btn" id="btn-view-cards" aria-pressed="true" onclick="setViewMode('cards')">
+                <i data-lucide="layout-grid" aria-hidden="true"></i> Schede
+              </button>
+              <button type="button" class="seg-btn" id="btn-view-table" aria-pressed="false" onclick="setViewMode('table')">
+                <i data-lucide="table-2" aria-hidden="true"></i> Tabella Sinottica
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-inputs-grid">
+          <div class="field-group">
+            <label class="control-label" for="filter-area">Macro-Area Tematica PTOF</label>
+            <select class="field-select" id="filter-area" onchange="applyFilters()">
+              <option value="all">Tutte le 5 Macro-Aree (51)</option>
+              <option value="1">1. STEM, Logica e Digitale</option>
+              <option value="2">2. Internazionalizzazione e Lingue Straniere</option>
+              <option value="3">3. Lettura, Espressione Teatrale, Arte e Musica</option>
+              <option value="4">4. Educazione Motoria, Sport e Salute</option>
+              <option value="5">5. Ambiente, Sostenibilità, Cittadinanza e Alt. IRC</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label class="control-label" for="filter-order">Ordine di Scuola</label>
+            <select class="field-select" id="filter-order" onchange="applyFilters()">
+              <option value="all">Tutti gli ordini di scuola</option>
+              <option value="Infanzia">Scuola dell'Infanzia</option>
+              <option value="Primaria">Scuola Primaria</option>
+              <option value="Secondaria">Scuola Secondaria di I Grado</option>
+              <option value="Trasversale">Trasversale IC / Comunità</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label class="control-label" for="filter-campus">Plesso Comunale</label>
+            <select class="field-select" id="filter-campus" onchange="applyFilters()">
+              <option value="all">Tutti i plessi (6 Comuni)</option>
+              <option value="Campoli M.T.">Campoli M.T.</option>
+              <option value="Castelpoto">Castelpoto</option>
+              <option value="Cautano">Cautano</option>
+              <option value="Foglianise">Foglianise</option>
+              <option value="Tocco Caudio">Tocco Caudio</option>
+              <option value="Vitulano">Vitulano</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label class="control-label" for="filter-search">Cerca titolo, referente o parola chiave</label>
+            <input class="field-input" type="search" id="filter-search" placeholder="Es. Scacco, Ciani, CLIL, teatro…" oninput="applyFilters()">
+          </div>
+        </div>
+
+        <div class="macro-pills-bar" id="macro-pills-bar" role="group" aria-label="Filtro rapido Macro-Aree">
+          <!-- Populated dynamically -->
+        </div>
+
+        <div class="filter-status-row">
+          <div class="results-summary" id="results-summary">
+            Visualizzazione di <strong>51</strong> su <strong>51</strong> progetti (7 extracurricolari · 44 curricolari)
+          </div>
+          <div class="filter-actions-right">
+            <button type="button" class="btn-secondary" id="btn-reset-filters" onclick="resetAllFilters()" disabled>
+              <i data-lucide="rotate-ccw" aria-hidden="true"></i> Ripristina filtri
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN PROJECT CATALOG -->
+    <main id="catalog-root" aria-live="polite">
+      <!-- Extracurricular Section -->
+      <section id="section-extracurricolari" class="is-hidden">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Sezione I · Extracurricolari</span>
+            <span class="dossier-meta" id="extra-count-meta">7 progetti deliberati</span>
+          </div>
+        </div>
+        <div class="section-header-block">
+          <h2 class="section-title">Progetti Extracurricolari di Ampliamento dell'Offerta Formativa</h2>
+          <p class="section-desc">Percorsi laboratoriali pomeridiani, accoglienza pre-scuola e appuntamenti culturali aperti alle famiglie e alle agenzie educative del territorio.</p>
+        </div>
+        <div class="card-grid" id="grid-extracurricolari"></div>
+      </section>
+
+      <!-- Curricular Section (grouped by 5 Macro-Aree) -->
+      <section id="section-curricolari" class="is-hidden">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Sezione II · Curricolari</span>
+            <span class="dossier-meta" id="curr-count-meta">44 progetti in 5 Macro-Aree PTOF</span>
+          </div>
+        </div>
+        <div class="section-header-block">
+          <h2 class="section-title">Progetti Curricolari nelle 5 Macro-Aree Tematiche PTOF</h2>
+          <p class="section-desc">Iniziative curricolari integrate nella didattica ordinaria dei sei plessi, ordinate secondo le cinque aree strategiche d'Istituto.</p>
+        </div>
+        <div id="curricolari-groups"></div>
+      </section>
+
+      <!-- Table View Section -->
+      <section id="section-table" class="is-hidden">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Quadro Sinottico</span>
+            <span class="dossier-meta" id="table-count-meta">51 progetti</span>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th><button type="button" class="sort-btn" onclick="setSort('code')">Codice <span id="sort-ind-code"></span></button></th>
+                <th><button type="button" class="sort-btn" onclick="setSort('title')">Titolo Progetto <span id="sort-ind-title"></span></button></th>
+                <th><button type="button" class="sort-btn" onclick="setSort('type')">Tipologia <span id="sort-ind-type"></span></button></th>
+                <th><button type="button" class="sort-btn" onclick="setSort('area')">Macro-Area PTOF <span id="sort-ind-area"></span></button></th>
+                <th>Ordine &amp; Plessi</th>
+                <th>Referente / Team</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Empty State -->
+      <section id="section-empty" class="empty-state is-hidden">
+        <h3>Nessun progetto corrisponde ai filtri attivi</h3>
+        <p>La combinazione selezionata di tipologia, Macro-Area, ordine di scuola, plesso o testo non restituisce progetti attivi. Ripristina i filtri per tornare alla panoramica completa dei 51 progetti.</p>
+        <button type="button" class="seg-btn" aria-pressed="true" onclick="resetAllFilters()">Mostra tutti i 51 progetti</button>
+      </section>
+    </main>
+
+    <!-- METHODOLOGY & SOURCES FOOTER -->
+    <footer class="aside-box">
+      <div class="footer-grid">
+        <div>
+          <h3>Note Organizzative e Struttura PTOF</h3>
+          <p>Tutti i 51 progetti esposti (7 Extracurricolari e 44 Curricolari) costituiscono parte integrante del Piano Triennale dell'Offerta Formativa (PTOF) dell'Istituto Comprensivo «Padre Isaia Columbro» per l'Anno Scolastico 2026/2027, formalmente approvati in sede di Collegio dei Docenti. Le attività si svolgono secondo i calendari definiti dai singoli plessi nel rispetto del monte ore disciplinare curricolare.</p>
+          <p>Per informazioni organizzative, iscrizioni o chiarimenti sui calendari di plesso è possibile rivolgersi ai docenti referenti o alla Segreteria Didattica dell'Istituto all'indirizzo <strong>bnic834005@istruzione.it</strong>.</p>
+        </div>
+        <div>
+          <h3>Fonti Documentali di Riferimento</h3>
+          <ul class="source-list">
+            <li>Briefing Doc: Piano dell'Offerta Formativa (PTOF) A.S. 2026-2027 — IC «Padre Isaia Columbro»</li>
+            <li>Quadro Sinottico Analitico dei 7 Progetti Extracurricolari PTOF A.S. 2026/2027</li>
+            <li>Brochure Offerta Formativa Extracurricolare — A.S. 2026/2027</li>
+            <li>Progetti Curricolari Allegati al PTOF A.S. 2026/2027 (Quadro dei 44 progetti approvati)</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const MACRO_AREAS = [
+      {
+        id: 1,
+        shortLabel: `STEM, Logica e Digitale`,
+        fullLabel: `1. STEM, Logica e Digitale`,
+        desc: `Pensiero computazionale, coding, matematica laboratoriale, giochi logici e problem solving.`
+      },
+      {
+        id: 2,
+        shortLabel: `Internazionalizzazione e Lingue`,
+        fullLabel: `2. Internazionalizzazione e Lingue Straniere`,
+        desc: `Mobilità Erasmus+, partenariati europei eTwinning/ESEP, metodologia CLIL e potenziamento inglese e francese.`
+      },
+      {
+        id: 3,
+        shortLabel: `Lettura, Teatro, Arte e Musica`,
+        fullLabel: `3. Lettura, Espressione Teatrale, Arte e Musica`,
+        desc: `Promozione della lettura e biblioteca scolastica, laboratori teatrali, musica d'insieme, tradizioni ed educazione emotiva.`
+      },
+      {
+        id: 4,
+        shortLabel: `Motoria, Sport e Salute`,
+        fullLabel: `4. Educazione Motoria, Sport e Salute`,
+        desc: `Coordinazione motoria, avviamento polisportivo, fair play, pallamano e benessere corporeo.`
+      },
+      {
+        id: 5,
+        shortLabel: `Ambiente, Cittadinanza e Alt. IRC`,
+        fullLabel: `5. Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC`,
+        desc: `Educazione ambientale e alimentare, Agenda 2030, continuità, accoglienza, inclusione linguistica e percorsi alternativi all'IRC.`
+      }
+    ];
+
+    const CAMPUSES = [
+      `Foglianise`,
+      `Vitulano`,
+      `Tocco Caudio`,
+      `Cautano`,
+      `Castelpoto`,
+      `Campoli M.T.`
+    ];
+
+    const ALL_CAMPUSES = [`Foglianise`, `Vitulano`, `Tocco Caudio`, `Cautano`, `Castelpoto`, `Campoli M.T.`];
+
+    const PROJECTS = [
+      /* ================= 7 PROGETTI EXTRACURRICOLARI ================= */
+      {
+        id: `EXT-01`,
+        code: `EXT 01`,
+        type: `extracurricolare`,
+        area: 3,
+        title: `Leggere… che piacere`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i 6 plessi (sedi: Tocco Caudio, Campoli M.T., Foglianise — Bibl. «V. Pedicini»)`,
+        target: `Alunni dell'ultimo anno della Scuola dell'Infanzia (6 plessi) e genitori`,
+        schedule: `Marzo – Maggio 2027 · Sabato 11:00–12:00 (11h incontri + 4h evento finale all'aperto + 5h progettazione)`,
+        referenti: `Bucciano Maria, Tresca Maria`,
+        team: `Team 11 docenti lettrici: M. Bucciano, C. Fortunato, M. Gravano, C. Maio, T. Meccariello, A. Onofrio, F. Rosina, M.S. Russo, M. Tresca, R. Vetrone, A. Viola`,
+        summary: `Lettura condivisa di albi illustrati e wordless book su tematiche emotive e sociali, prestito libri presso la Biblioteca «V. Pedicini» di Foglianise, continuità verticale ed evento conclusivo all'aperto.`,
+        details: `Competenze PTOF: Star bene a scuola (inclusione, prevenzione disagio), Crescere insieme, Valorizzare la scuola · Competenza personale, sociale e capacità di imparare ad imparare.`
+      },
+      {
+        id: `EXT-02`,
+        code: `EXT 02`,
+        type: `extracurricolare`,
+        area: 3,
+        title: `Flauti in festa`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria`,
+        campuses: [`Foglianise`],
+        campusLabel: `Scuola Primaria di Foglianise`,
+        target: `36 alunni delle Classi Quinte`,
+        schedule: `Secondo Quadrimestre · Martedì 14:15–16:15 (20 ore complessive)`,
+        referenti: `Giovanna Pirozzolo`,
+        team: `Team 6 docenti: G. Angelone (3h), D. Caruso (3h), L. Ciotta (3h), M.T. Limata (4h), G. Pirozzolo (4h), G. Ruggiero (3h)`,
+        summary: `Percorso musicale di flauto dolce articolato in memoria sonora (ripasso repertorio triennale), prove d'insieme (ensemble) con costruzione narrativa, gestione dell'emozione da palcoscenico e spettacolo finale.`,
+        details: `Competenze PTOF: Promuovere e consolidare gli apprendimenti (linguistico, artistico, musicale, laboratoriale), Star bene a scuola, Crescere insieme · Consapevolezza ed espressione culturale.`
+      },
+      {
+        id: `EXT-03`,
+        code: `EXT 03`,
+        type: `extracurricolare`,
+        area: 4,
+        title: `Sulle ali del ritmo: il corpo come strumento`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Campoli M.T.`],
+        campusLabel: `Scuola Secondaria di Campoli M.T. (Palestra)`,
+        target: `20 alunni delle Classi Prime e Seconde`,
+        schedule: `Gennaio – Aprile 2027 · Mercoledì 14:30–16:30 (20 ore per docente)`,
+        referenti: `Prof. Vittorio Esposito, Prof.ssa Angelamaria Castaldo`,
+        team: `Team 2 docenti: V. Esposito (20h), A. Castaldo (20h)`,
+        summary: `Laboratorio integrato di Educazione Fisica e Musicale: propriocezione, camminata a tempo, variazioni di andatura, coordinazione, percussioni corporee, vocalità e verbalizzazione di sensazioni corporee e strutture musicali.`,
+        details: `Competenze PTOF: Promuovere apprendimenti, Star bene a scuola, Gioco-Sport-Salute, Vivere l'ambiente, Crescere insieme, Valorizzare la scuola.`
+      },
+      {
+        id: `EXT-04`,
+        code: `EXT 04`,
+        type: `extracurricolare`,
+        area: 1,
+        title: `Scacco Mat-e!`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Cautano`, `Campoli M.T.`, `Foglianise`, `Vitulano`],
+        campusLabel: `Sedi di Cautano, Campoli M.T., Foglianise e Vitulano`,
+        target: `40 alunni delle Classi Prime e Seconde (20 + 20)`,
+        schedule: `Novembre 2026 – Aprile 2027 · Lunedì o Mercoledì 14:15–16:15 (20h docenza + 10h prog. + 3h evento finale)`,
+        referenti: `Prof.ssa Pasqualina Rapuano`,
+        team: `1 docente referente: P. Rapuano`,
+        summary: `Uso della scacchiera come modello concreto per la matematica: piano cartesiano e coordinate, traslazioni vettoriali, rette e simmetrie, crescita esponenziale (leggenda del riso), frazioni, percentuali, problem solving e torneo finale aperto alle famiglie.`,
+        details: `Competenze PTOF: Promuovere apprendimenti (scientifico-matematico), Star bene a scuola (inclusione, antidispersione), Valorizzare la scuola · Competenza matematica e STEM.`
+      },
+      {
+        id: `EXT-05`,
+        code: `EXT 05`,
+        type: `extracurricolare`,
+        area: 5,
+        title: `Servizio Pre scuola`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Foglianise`],
+        campusLabel: `Scuola Secondaria di Foglianise`,
+        target: `18 alunni della sede di Foglianise`,
+        schedule: `Ottobre 2026 – Giugno 2027 · Lunedì–Venerdì 07:40–08:00 (20 min al giorno)`,
+        referenti: `Prof.ssa Antonella Frattasi`,
+        team: `Team 5 docenti turnanti: M. Del Grosso (Lun), F. Caserta (Mar), A. Frattasi (Mer), L. Vicedomini (Gio), L. Giardullo (Ven)`,
+        summary: `Accoglienza, vigilanza educativa e intrattenimento pre-lezione per garantire un clima scolastico rassicurante, favorire le relazioni interpersonali e offrire supporto concreto alle famiglie lavoratrici.`,
+        details: `Competenze PTOF: Promuovere e consolidare gli apprendimenti, Star bene a scuola · Competenza personale, sociale, civica e imparare ad imparare.`
+      },
+      {
+        id: `EXT-06`,
+        code: `EXT 06`,
+        type: `extracurricolare`,
+        area: 5,
+        title: `Metti un venerdì pomeriggio… il film come strumento dialogante (Cineforum Didattico)`,
+        orders: [`Trasversale`],
+        orderLabel: `Trasversale IC / Famiglie`,
+        campuses: [`Tocco Caudio`, `Castelpoto`, `Foglianise`],
+        campusLabel: `Plessi di Tocco Caudio, Castelpoto e Foglianise`,
+        target: `Intera popolazione scolastica dell'IC e famiglie`,
+        schedule: `Novembre 2026 – Aprile 2027 · Venerdì 17:00–19:00 (10h docenza + 6h coordinamento)`,
+        referenti: `Prof.ssa Mariapia Ciani`,
+        team: `1 docente referente/coordinatrice: M. Ciani`,
+        summary: `Proiezione di opere cinematografiche su tematiche educative, civiche e sociali seguita dall'«Agorà Dialogante» per favorire il confronto intergenerazionale e rafforzare il patto educativo tra scuola e famiglia.`,
+        details: `Competenze PTOF: Crescere insieme («Cittadinanza attiva»), Valorizzare la scuola · Competenza sociale e civica in materia di cittadinanza. Supporti: videoproiettore, PC e impianto audio.`
+      },
+      {
+        id: `EXT-07`,
+        code: `EXT 07`,
+        type: `extracurricolare`,
+        area: 5,
+        title: `La scuola tra le righe`,
+        orders: [`Trasversale`],
+        orderLabel: `Trasversale IC / Territorio`,
+        campuses: [`Foglianise`, `Cautano`, `Vitulano`, `Castelpoto`],
+        campusLabel: `Sedi di Foglianise, Cautano, Vitulano e Castelpoto`,
+        target: `Famiglie dell'IC, Enti, Parrocchie, Comunità e Agenzie Educative locali`,
+        schedule: `Novembre 2026 – Maggio 2027 · Incontri infrasettimanali 17:00–19:00 (10 ore complessive)`,
+        referenti: `Mariapia Ciani`,
+        team: `Team 3 docenti: M. Ciani (10h doc. + 10h coord.), F. Rosina (10h), A. Viola (10h)`,
+        summary: `Ciclo di incontri culturali e dibattiti con esperti e relatori a partire da libri e pubblicazioni su tematiche educative e sociali attuali, consolidando la scuola come presidio culturale aperto al territorio.`,
+        details: `Competenze PTOF: Crescere insieme («Cittadinanza attiva»), Valorizzare la scuola (comunità aperta al territorio) · Competenza sociale e civica.`
+      },
+
+      /* ================= 44 PROGETTI CURRICOLARI ================= */
+      /* --- MACRO-AREA 1: STEM, Logica e Digitale (2) --- */
+      {
+        id: `CUR-03`,
+        code: `CUR 03`,
+        type: `curricolare`,
+        area: 1,
+        title: `Matematica in Gioco (GMM e Bebras)`,
+        orders: [`Primaria`, `Secondaria`],
+        orderLabel: `Primaria (Cl. 3ª–5ª) e Secondaria I gr.`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi (536 alunni)`,
+        target: `536 alunni di Primaria (3ª, 4ª, 5ª) e Secondaria I gr.`,
+        schedule: `Anno Scolastico 2026/2027 (calendario gare d'istituto e nazionali)`,
+        referenti: `Marinella Del Grosso, Maria Vittoria Tommaselli`,
+        team: `Referenti d'Istituto e docenti di Matematica`,
+        summary: `Partecipazione ai Giochi Matematici del Mediterraneo (GMM) e alla gara di informatica a squadre Bebras per sviluppare il pensiero logico-scientifico e computazionale.`,
+        details: `Macro-Area 1 PTOF: STEM, Logica e Digitale. Coinvolgimento trasversale dei plessi di Primaria e Secondaria.`
+      },
+      {
+        id: `CUR-30`,
+        code: `CUR 30`,
+        type: `curricolare`,
+        area: 1,
+        title: `L’Ora dell’Informatica`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi (19 classi · 268 alunni)`,
+        target: `268 alunni delle 19 classi della Scuola Secondaria`,
+        schedule: `Anno Scolastico 2026/2027 (calendario di plesso)`,
+        referenti: `Lucia Vicedomini`,
+        team: `Docenti di Matematica, Scienze e Tecnologia`,
+        summary: `Evento didattico globale orientato allo sviluppo del pensiero computazionale e alla risoluzione di problemi attraverso attività ludiche di coding, sicurezza in rete (cyberbullismo) e uso consapevole dei media digitali.`,
+        details: `Macro-Area 1 PTOF: STEM, Logica e Digitale. Attivo in tutte le classi della Secondaria di I Grado dell'IC.`
+      },
+
+      /* --- MACRO-AREA 2: Internazionalizzazione e Lingue Straniere (4) --- */
+      {
+        id: `CUR-43`,
+        code: `CUR 43`,
+        type: `curricolare`,
+        area: 2,
+        title: `Orizzonti Europei: Crescere, Collaborare e Sognare (Erasmus+ e eTwinning)`,
+        orders: [`Infanzia`, `Primaria`, `Secondaria`],
+        orderLabel: `Infanzia, Primaria e Secondaria I gr.`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi dell'IC`,
+        target: `Alunni e docenti di tutti i plessi e ordini`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Nicoletta Lupone`,
+        team: `Team internazionalizzazione e docenti di plesso`,
+        summary: `Progetto integrato di mobilità Erasmus+ (job shadowing e scambi alunni) e partenariati virtuali eTwinning/ESEP per lo sviluppo di competenze multiculturali, plurilinguismo, sostenibilità e cittadinanza europea.`,
+        details: `Macro-Area 2 PTOF: Internazionalizzazione e Lingue Straniere.`
+      },
+      {
+        id: `CUR-04`,
+        code: `CUR 04`,
+        type: `curricolare`,
+        area: 2,
+        title: `«My First Steps in CLIL»`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Campoli M.T.`, `Cautano`, `Foglianise`, `Tocco Caudio`, `Vitulano`],
+        campusLabel: `Campoli M.T., Cautano, Foglianise, Tocco Caudio, Vitulano`,
+        target: `Alunni della Scuola Secondaria di I Grado`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `M. Bucciano, N. Lupone, A. Napolitano, N. Pezzillo`,
+        team: `Docenti di Lingua Inglese e Geografia`,
+        summary: `Apprendimento integrato della Geografia in lingua inglese con metodologia CLIL curricolare secondo il QCER, con mappe interattive, didattica multimediale e laboratorio di orientamento.`,
+        details: `Macro-Area 2 PTOF: Internazionalizzazione e Lingue Straniere.`
+      },
+      {
+        id: `CUR-24`,
+        code: `CUR 24`,
+        type: `curricolare`,
+        area: 2,
+        title: `Le Français pour tous: lingua, apprendimento, inclusione`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Campoli M.T.`, `Cautano`, `Foglianise`, `Tocco Caudio`, `Vitulano`],
+        campusLabel: `Campoli M.T., Cautano, Foglianise, Tocco Caudio, Vitulano`,
+        target: `Alunni della Scuola Secondaria di I Grado`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Emma Catalano, Angela Caputo, Antonietta Pignone, Giusi Tecce`,
+        team: `Team docenti di Lingua Francese`,
+        summary: `Potenziamento della seconda lingua comunitaria (francese) e della relativa cultura mediante drammatizzazione, scambi colloquiali, attività inclusive e supporto specialistico per alunni NAI.`,
+        details: `Macro-Area 2 PTOF: Internazionalizzazione e Lingue Straniere.`
+      },
+      {
+        id: `CUR-23`,
+        code: `CUR 23`,
+        type: `curricolare`,
+        area: 2,
+        title: `Step by Step English (A1/A2)`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Tocco Caudio`, `Campoli M.T.`, `Foglianise`, `Vitulano`],
+        campusLabel: `Tocco Caudio, Campoli M.T., Foglianise, Vitulano`,
+        target: `Alunni della Scuola Secondaria di I Grado`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Maria Bucciano, Nicolina Pezzillo, Antonietta Napolitano`,
+        team: `Team docenti di Lingua Inglese`,
+        summary: `Consolidamento graduale delle abilità di Listening & Speaking (livelli A1/A2) attraverso gamification unplugged, stazioni di apprendimento e role playing.`,
+        details: `Macro-Area 2 PTOF: Internazionalizzazione e Lingue Straniere.`
+      },
+
+      /* --- MACRO-AREA 3: Lettura, Espressione Teatrale, Arte e Musica (18) --- */
+      {
+        id: `CUR-40`,
+        code: `CUR 40`,
+        type: `curricolare`,
+        area: 3,
+        title: `La valigia delle storie (Progetto Lettura Infanzia)`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi dell'Infanzia (243 bambini)`,
+        target: `243 bambini della Scuola dell'Infanzia dell'IC`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Messere, Minicozzi, Maffei, Onofrio`,
+        team: `Messere, Minicozzi (Cautano), Maffei, Onofrio (Castelpoto) e docenti di plesso`,
+        summary: `Letture animate con kamishibai e albi illustrati, drammatizzazioni, laboratori grafici, promozione del prestito bibliotecario scolastico e adesione alle campagne nazionali «Libriamoci» e «#IoLeggoPerché».`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-26`,
+        code: `CUR 26`,
+        type: `curricolare`,
+        area: 3,
+        title: `Viaggio nel mondo delle emozioni`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 3ªA e 3ªB)`,
+        campuses: [`Foglianise`],
+        campusLabel: `Primaria Foglianise (Cl. 3ªA e 3ªB)`,
+        target: `Alunni delle Classi 3ªA e 3ªB`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Angela Sellitto, Vittoria Lorusso, Ilenia Russo`,
+        team: `Team docente classi terze`,
+        summary: `Percorso di lettura guidata ad alta voce, circle time e rielaborazione grafico-digitale per lo sviluppo dell'intelligenza emotiva, la gestione degli affetti e un clima di classe positivo.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-16`,
+        code: `CUR 16`,
+        type: `curricolare`,
+        area: 3,
+        title: `“Tutti per uno un libro per tutti”`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 1ª, 2ª, 3ª)`,
+        campuses: [`Tocco Caudio`],
+        campusLabel: `Primaria Tocco Caudio (Cl. 1ª, 2ª, 3ª)`,
+        target: `Alunni delle Classi 1ª, 2ª e 3ª`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `C. Perone, O. Barbato, R. Verdino, A. Coppolaro`,
+        team: `C. Perone, O. Barbato, R. Verdino, A. Coppolaro, B. Columbro, P. De Gregorio, A. Grieco`,
+        summary: `Lettura espressiva quotidiana di albi illustrati ad alto impatto visivo, arricchimento lessicale e comprensione del testo con attenzione specifica all'inclusione di alunni nello spettro autistico.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-10`,
+        code: `CUR 10`,
+        type: `curricolare`,
+        area: 3,
+        title: `“Dal libro al palco: la magia della favola”`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia`,
+        campuses: [`Cautano`],
+        campusLabel: `Infanzia Cautano (tutti i bambini)`,
+        target: `Tutti i bambini dell'Infanzia di Cautano`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Messere, Minicozzi`,
+        team: `Messere, Minicozzi e tutte le docenti del plesso`,
+        summary: `Drammatizzazione teatrale di favole, giochi di espressione corporea, lettura animata e realizzazione collaborativa di scenografie e costumi per sviluppare ascolto e linguaggio verbale e gestuale.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-09`,
+        code: `CUR 09`,
+        type: `curricolare`,
+        area: 3,
+        title: `Tutti in scena / Il teatro come specchio della vita`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 5ª)`,
+        campuses: [`Cautano`],
+        campusLabel: `Primaria Cautano (Classe 5ª)`,
+        target: `Alunni della Classe 5ª di Cautano`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Grazia Maria Luisa Esposito`,
+        team: `Coord. G.M.L. Esposito e team docente Classe 5ª`,
+        summary: `Laboratorio teatrale integrato per favorire l'inclusione con scrittura collettiva della sceneggiatura, improvvisazione, rielaborazione di testi drammatici e spettacolo finale per le famiglie.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-36`,
+        code: `CUR 36`,
+        type: `curricolare`,
+        area: 3,
+        title: `“Favole e favole….” (Teatro Infanzia)`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia (5 anni)`,
+        campuses: [`Tocco Caudio`],
+        campusLabel: `Infanzia Tocco Caudio (Sez. 5 anni)`,
+        target: `Bambini di 5 anni dell'Infanzia di Tocco Caudio`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Antonella Carfora`,
+        team: `A. Carfora, S. Ascione, M.L. Borselleca, M.R. Ciotta, A. Mancinelli`,
+        summary: `Ascolto e rielaborazione della favola «I tre porcellini», costruzione di elementi scenici con materiali riciclati, avvio alla drammatizzazione e recita finale.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-38`,
+        code: `CUR 38`,
+        type: `curricolare`,
+        area: 3,
+        title: `Sketch (da Eduardo a Salemme)`,
+        orders: [`Primaria`, `Secondaria`],
+        orderLabel: `Secondaria I gr. / Primaria`,
+        campuses: [`Foglianise`],
+        campusLabel: `Foglianise (Secondaria / Primaria)`,
+        target: `Alunni delle classi coinvolte di Foglianise`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `M. Caporaso, M. Fusco`,
+        team: `M. Caporaso, M. Fusco`,
+        summary: `Avvicinamento al teatro comico napoletano da Eduardo a Salemme attraverso brevi sketch riadattati, mimo, potenziamento espressivo e valorizzazione delle tradizioni culturali locali.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-42`,
+        code: `CUR 42`,
+        type: `curricolare`,
+        area: 3,
+        title: `11 Favole fra le righe`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria`,
+        campuses: [`Castelpoto`],
+        campusLabel: `Primaria Castelpoto`,
+        target: `Alunni della Scuola Primaria di Castelpoto`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Antonella Cristofaro`,
+        team: `A. Cristofaro`,
+        summary: `Lettura guidata, arricchimento lessicale, comprensione cronologica, scrittura creativa, illustrazione e rappresentazione grafica e drammatica con strumenti multimediali.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-08`,
+        code: `CUR 08`,
+        type: `curricolare`,
+        area: 3,
+        title: `Musicando`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi dell'Infanzia (243 bambini)`,
+        target: `243 bambini della Scuola dell'Infanzia dell'IC`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `A.M. Massaro, M. Zollo, C. Fortunato, C. Maio`,
+        team: `A.M. Massaro (Cautano), M. Zollo (Vitulano), C. Fortunato e C. Maio (Castelpoto) e docenti di plesso`,
+        summary: `Educazione al ritmo e alla percezione sonora fin dalla prima infanzia, canti corali di saluto, manipolazione di piccoli strumenti a percussione (maracas, tamburelli) e coordinamento motorio.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-22`,
+        code: `CUR 22`,
+        type: `curricolare`,
+        area: 3,
+        title: `Concerto di Natale 2026`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Foglianise`],
+        campusLabel: `Secondaria Foglianise`,
+        target: `Alunni della Secondaria di Foglianise, famiglie e territorio`,
+        schedule: `Dicembre 2026`,
+        referenti: `Daniela Intorcia (Musica), Tiziana Salvetti (Arte)`,
+        team: `D. Intorcia, T. Salvetti`,
+        summary: `Canto corale e strumentale abbinato alla realizzazione artistica di tableaux vivants sui temi della pace, della fraternità e del chiaroscuro per il tradizionale saggio natalizio.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-13`,
+        code: `CUR 13`,
+        type: `curricolare`,
+        area: 3,
+        title: `Giochi d’arte e fantasia`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia (Sez. 2A)`,
+        campuses: [`Campoli M.T.`],
+        campusLabel: `Infanzia Campoli M.T. (Sez. 2A)`,
+        target: `Alunni della Sezione 2A di Campoli M.T.`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Cosimina Gravano`,
+        team: `C. Gravano`,
+        summary: `Laboratorio di pittura, manipolazione di materiali plastici, produzioni grafico-espressive, percezione cromatica e sviluppo della manualità fine e coordinamento oculo-manuale.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-01`,
+        code: `CUR 01`,
+        type: `curricolare`,
+        area: 3,
+        title: `Arcimboldo Arte`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia (3 anni)`,
+        campuses: [`Foglianise`],
+        campusLabel: `Infanzia Foglianise (bambini 3 anni)`,
+        target: `Bambini di 3 anni dell'Infanzia di Foglianise`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `M. Caporaso, M. Fusco`,
+        team: `M. Caporaso, M. Fusco`,
+        summary: `Percorso sensoriale e visuale ispirato allo stile pittorico di Arcimboldo con utilizzo didattico di frutta, verdura e timbri naturali per la creazione di un book personale.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-05`,
+        code: `CUR 05`,
+        type: `curricolare`,
+        area: 3,
+        title: `La nostra Festa del Grano: Arte, Cultura, Spettacolo…`,
+        orders: [`Infanzia`, `Primaria`],
+        orderLabel: `Infanzia e Primaria`,
+        campuses: [`Foglianise`],
+        campusLabel: `Foglianise (Infanzia e Primaria)`,
+        target: `Tutti i bambini dell'Infanzia e Primaria di Foglianise`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Tutte le docenti del plesso`,
+        team: `Caporaso, Fusco, Catillo, Vetrone R., De Duonni, Lupone, Matarazzo`,
+        summary: `Valorizzazione dell'identità locale e del patrimonio artistico legato alla storica Festa del Grano di Foglianise con rievocazione della sfilata dei carri di San Rocco, intreccio dei covoni e sfilata nel paese.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-02`,
+        code: `CUR 02`,
+        type: `curricolare`,
+        area: 3,
+        title: `“Il Natale che doniamo”`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Tutte le classi)`,
+        campuses: [`Tocco Caudio`],
+        campusLabel: `Primaria Tocco Caudio`,
+        target: `Tutte le classi della Primaria di Tocco Caudio`,
+        schedule: `Dicembre 2026`,
+        referenti: `Angela Coppolaro`,
+        team: `A. Coppolaro e team docenti`,
+        summary: `Progetto intergenerazionale di solidarietà con visite e canti natalizi presso la Casa di Cura SS. Medici Cosma e Damiano a favore degli anziani della struttura.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-18`,
+        code: `CUR 18`,
+        type: `curricolare`,
+        area: 3,
+        title: `Progetto Teatro Infanzia Castelpoto`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia`,
+        campuses: [`Castelpoto`],
+        campusLabel: `Infanzia Castelpoto`,
+        target: `Bambini della Scuola dell'Infanzia di Castelpoto`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `A. Onofrio, C. Maio, C. Fortunato`,
+        team: `A. Onofrio, C. Maio, C. Fortunato, A. Maffei, M.R. Pacifico, A. Di Marzo, M. Fusco`,
+        summary: `Laboratorio teatrale dedicato alla valorizzazione dell'espressività emotiva, della mimica e della relazione positiva con i pari.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-19`,
+        code: `CUR 19`,
+        type: `curricolare`,
+        area: 3,
+        title: `La timida Tilli`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria`,
+        campuses: [`Castelpoto`],
+        campusLabel: `Primaria Castelpoto`,
+        target: `Alunni della Primaria di Castelpoto`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Giovanna Carolla`,
+        team: `G. Carolla`,
+        summary: `Percorso narrativo ed emotivo incentrato sullo sviluppo dell'autostima, sul superamento della timidezza e sull'inclusione nel gruppo classe.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-34`,
+        code: `CUR 34`,
+        type: `curricolare`,
+        area: 3,
+        title: `“I colori del mio cuore” – Percorso sulle emozioni`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 1ª e 2ª)`,
+        campuses: [`Castelpoto`],
+        campusLabel: `Primaria Castelpoto (Cl. 1ª e 2ª)`,
+        target: `Alunni delle Classi 1ª e 2ª di Castelpoto`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Angela Maria Palma`,
+        team: `A.M. Palma`,
+        summary: `Percorso di educazione socio-emotiva attraverso l'arte, il colore e l'ascolto guidato.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+      {
+        id: `CUR-39`,
+        code: `CUR 39`,
+        type: `curricolare`,
+        area: 3,
+        title: `“Oltre lo specchio”`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 4ªA e 4ªB)`,
+        campuses: [`Foglianise`],
+        campusLabel: `Primaria Foglianise (Cl. 4ªA e 4ªB)`,
+        target: `Alunni delle Classi 4ªA e 4ªB di Foglianise`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Maria Izzo`,
+        team: `M. Izzo`,
+        summary: `Percorso espressivo sulla percezione di sé, la corporeità, l'inclusione e il rispetto delle diversità.`,
+        details: `Macro-Area 3 PTOF: Lettura, Espressione Teatrale, Arte e Musica.`
+      },
+
+      /* --- MACRO-AREA 4: Educazione Motoria, Sport e Salute (5) --- */
+      {
+        id: `CUR-11`,
+        code: `CUR 11`,
+        type: `curricolare`,
+        area: 4,
+        title: `Corpo, gioco e fantasia`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi dell'Infanzia (243 bambini)`,
+        target: `243 bambini della Scuola dell'Infanzia dell'IC`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `R. Sabatino, R. De Duonni, C. Maio, C. Fortunato`,
+        team: `R. Sabatino, R. De Duonni (Cautano), C. Maio, C. Fortunato (Castelpoto) e docenti di plesso`,
+        summary: `Percorsi motori di coordinazione generale, reazione rapida a stimoli sonori e visivi, orientamento spaziale, schema corporeo, socializzazione e gestione del benessere.`,
+        details: `Macro-Area 4 PTOF: Educazione Motoria, Sport e Salute.`
+      },
+      {
+        id: `CUR-07`,
+        code: `CUR 07`,
+        type: `curricolare`,
+        area: 4,
+        title: `Nuovi Giochi della Gioventù A.S. 2026/2027`,
+        orders: [`Primaria`, `Secondaria`],
+        orderLabel: `Primaria e Secondaria I gr.`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi dell'IC`,
+        target: `Alunni di Scuola Primaria e Secondaria di I Grado`,
+        schedule: `Anno Scolastico 2026/2027 (fasi d'istituto e provinciali)`,
+        referenti: `Angela Castaldo, Filomena Caserta`,
+        team: `A. Castaldo, F. Caserta e referenti di educazione motoria`,
+        summary: `Avviamento alla pratica polisportiva e alle discipline atletiche con promozione di corretti stili di vita, fair play e fasi d'istituto e territoriali inclusive per alunni di ogni abilità.`,
+        details: `Macro-Area 4 PTOF: Educazione Motoria, Sport e Salute.`
+      },
+      {
+        id: `CUR-14`,
+        code: `CUR 14`,
+        type: `curricolare`,
+        area: 4,
+        title: `Scuola Attiva Junior`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Tocco Caudio`, `Campoli M.T.`, `Foglianise`, `Cautano`],
+        campusLabel: `Tocco Caudio, Campoli M.T., Foglianise, Cautano`,
+        target: `Alunni della Scuola Secondaria di I Grado`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Angela Castaldo, Filomena Caserta`,
+        team: `A. Castaldo, F. Caserta in collaborazione con Federazioni Sportive Nazionali e Sport e Salute`,
+        summary: `Potenziamento delle discipline sportive scolastiche con intervento di tutor federali e moduli orientativi multidisciplinari.`,
+        details: `Macro-Area 4 PTOF: Educazione Motoria, Sport e Salute.`
+      },
+      {
+        id: `CUR-41`,
+        code: `CUR 41`,
+        type: `curricolare`,
+        area: 4,
+        title: `Tutti in campo con la pallamano`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi (Tutte le classi)`,
+        target: `Tutte le classi della Scuola Secondaria di I Grado`,
+        schedule: `Anno Scolastico 2026/2027 (modulo di 15 ore)`,
+        referenti: `Filomena Caserta, Angela Castaldo`,
+        team: `F. Caserta, A. Castaldo in collaborazione con ASD Pallamano Benevento 23`,
+        summary: `Modulo di 15 ore con tecnici federali esperti per apprendere regole, tecniche fondamentali della pallamano, valore del gruppo, rispetto dell'avversario e fair play.`,
+        details: `Macro-Area 4 PTOF: Educazione Motoria, Sport e Salute.`
+      },
+      {
+        id: `CUR-27`,
+        code: `CUR 27`,
+        type: `curricolare`,
+        area: 4,
+        title: `Fair Play: Gioco mi diverto, rispetto le regole e gli altri`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 4ª e 5ª)`,
+        campuses: [`Castelpoto`],
+        campusLabel: `Primaria Castelpoto (Cl. 4ª e 5ª)`,
+        target: `Alunni delle Classi 4ª e 5ª di Castelpoto`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Maria Vittoria Tommaselli`,
+        team: `M.V. Tommaselli, Cristofaro, De Corso, Di Dio, Farese, Palma, Viglione`,
+        summary: `Percorso motorio curricolare incentrato sul valore delle regole sportive e interpersonali, cooperazione, gestione positiva di vittoria/sconfitta, rifiuto del bullismo e performance finale.`,
+        details: `Macro-Area 4 PTOF: Educazione Motoria, Sport e Salute.`
+      },
+
+      /* --- MACRO-AREA 5: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC (15) --- */
+      {
+        id: `CUR-28`,
+        code: `CUR 28`,
+        type: `curricolare`,
+        area: 5,
+        title: `“Colori, profumi e sapori” (Educazione Alimentare)`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi dell'Infanzia (243 bambini)`,
+        target: `243 bambini della Scuola dell'Infanzia dell'IC`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Pedicini, Rapuano, Maffei, Pacifico`,
+        team: `Pedicini, Rapuano (Cautano), Maffei, Pacifico (Castelpoto) e docenti di plesso`,
+        summary: `Laboratori sensoriali alla scoperta di frutta e verdura di stagione, piramide alimentare, norme igieniche a tavola e preparazione di semplici ricette per una sana alimentazione.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-33`,
+        code: `CUR 33`,
+        type: `curricolare`,
+        area: 5,
+        title: `Radici e germogli (Orto Didattico)`,
+        orders: [`Infanzia`],
+        orderLabel: `Scuola dell'Infanzia`,
+        campuses: [`Vitulano`],
+        campusLabel: `Infanzia Vitulano (38 bambini)`,
+        target: `38 bambini della Scuola dell'Infanzia di Vitulano`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Manuela Zollo, Nicoletta Iorio`,
+        team: `M. Zollo, N. Iorio, Antonella (con la collaborazione dei nonni della comunità)`,
+        summary: `Esperienza di coltivazione dell'orto didattico in cortile, osservazione della semina, cura dei cicli stagionali e rispetto della natura in dialogo intergenerazionale con i nonni.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-44`,
+        code: `CUR 44`,
+        type: `curricolare`,
+        area: 5,
+        title: `Cittadini del mondo… custodi del territorio`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 1ª–5ª)`,
+        campuses: [`Vitulano`],
+        campusLabel: `Primaria Vitulano (Cl. 1ª–5ª)`,
+        target: `Tutte le classi (1ª–5ª) della Primaria di Vitulano`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Ester Orlacchio`,
+        team: `E. Orlacchio, Procaccini, Vetrone, Santucci, Raviele G., Raviele C., Grasso, Basilone, De Corso, Centrella, Leone, Farese`,
+        summary: `Laboratorio interdisciplinare dedicato all'Agenda 2030, alla conoscenza di flora e fauna del Parco Regionale del Taburno Camposauro, alla tutela della biodiversità e ai gesti quotidiani di ecocittadinanza.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-21`,
+        code: `CUR 21`,
+        type: `curricolare`,
+        area: 5,
+        title: `Fralie Chef`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado (Cl. 2ª)`,
+        campuses: [`Tocco Caudio`, `Campoli M.T.`, `Cautano`, `Foglianise`, `Vitulano`],
+        campusLabel: `Tocco Caudio, Campoli M.T., Cautano, Foglianise, Vitulano`,
+        target: `Alunni delle Classi Seconde (Secondaria I gr.)`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Emma Catalano, Giusi Tecce, Angela Caputo`,
+        team: `E. Catalano, G. Tecce, A. Caputo`,
+        summary: `Competizione e laboratorio didattico interdisciplinare tra Educazione Alimentare e Lingua Francese con creazione di ricette e registrazione di contributi audio in francese per la fase provinciale.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-06`,
+        code: `CUR 06`,
+        type: `curricolare`,
+        area: 5,
+        title: `“Sogniamo tra gli articoli”`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria`,
+        campuses: [`Tocco Caudio`],
+        campusLabel: `Primaria Tocco Caudio (46 bambini)`,
+        target: `Tutti i 46 alunni della Primaria di Tocco Caudio`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Enza Di Gioia`,
+        team: `E. Di Gioia`,
+        summary: `Educazione alla cittadinanza attiva: studio guidato della Costituzione Italiana e della Convenzione sui Diritti dell'Infanzia abbinato alle fiabe tradizionali e restituzione teatrale.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-17`,
+        code: `CUR 17`,
+        type: `curricolare`,
+        area: 5,
+        title: `Un ponte per crescere (Progetto Continuità Infanzia–Primaria)`,
+        orders: [`Infanzia`, `Primaria`],
+        orderLabel: `Infanzia (Sez. 5 anni) e Primaria`,
+        campuses: ALL_CAMPUSES,
+        campusLabel: `Tutti i plessi dell'IC (84 bambini)`,
+        target: `84 bambini delle sezioni 5 anni dell'Infanzia e alunni della Primaria`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Docenti referenti plessi Infanzia`,
+        team: `Russo, Pagano, Savoia, Massaro, Rapuano, Pedicini, Zollo, Iorio, De Duonni, Lupone, Fortunato, Maffei e team`,
+        summary: `Raccordo pedagogico-didattico tra Scuola dell'Infanzia e Scuola Primaria per agevolare un sereno passaggio tra ordini di scuola mediante incontri, letture e manufatti comuni.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-32`,
+        code: `CUR 32`,
+        type: `curricolare`,
+        area: 5,
+        title: `SOS Italiano`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria`,
+        campuses: [`Cautano`],
+        campusLabel: `Primaria Cautano`,
+        target: `Alunni della Primaria di Cautano`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Grazia Maria Luisa Esposito`,
+        team: `Coord. G.M.L. Esposito e docenti di plesso`,
+        summary: `Iniziative per l'integrazione linguistica degli alunni con background migratorio, potenziamento strumentale di lettura e scrittura, recupero ortografico, arricchimento lessicale e valorizzazione della multiculturalità.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-25`,
+        code: `CUR 25`,
+        type: `curricolare`,
+        area: 5,
+        title: `Recupero - Consolidamento - Potenziamento`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria`,
+        campuses: [`Cautano`],
+        campusLabel: `Primaria Cautano`,
+        target: `Alunni della Primaria di Cautano`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Grazia Maria Luisa Esposito`,
+        team: `Coord. G.M.L. Esposito e tutti i docenti del plesso`,
+        summary: `Interventi individualizzati e a piccoli gruppi per livelli volti a consolidare il calcolo, la lettura e il metodo di studio personale, recuperando fragilità e valorizzando le eccellenze.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-35`,
+        code: `CUR 35`,
+        type: `curricolare`,
+        area: 5,
+        title: `Alternativamente Imparo (Attività Alternativa IRC)`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria`,
+        campuses: [`Cautano`],
+        campusLabel: `Primaria Cautano`,
+        target: `Alunni che non si avvalgono dell'IRC`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Grazia Maria Luisa Esposito`,
+        team: `Coord. G.M.L. Esposito e docenti referenti`,
+        summary: `Attività didattiche laboratoriali, pratiche e creative di rinforzo nelle competenze di base e promozione della cittadinanza inclusiva e globale per alunni non avvalentesi dell'IRC.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-29`,
+        code: `CUR 29`,
+        type: `curricolare`,
+        area: 5,
+        title: `Piccoli cittadini per grandi valori! – Crescere insieme`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria`,
+        campuses: [`Foglianise`],
+        campusLabel: `Primaria Foglianise`,
+        target: `Alunni che non si avvalgono dell'IRC`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Anna Tedino`,
+        team: `A. Tedino`,
+        summary: `Percorso per le Attività Alternative IRC orientato all'educazione civica, ai diritti dei bambini, al rispetto delle regole di convivenza civile, alla solidarietà, all'inclusione e all'emotività.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-15`,
+        code: `CUR 15`,
+        type: `curricolare`,
+        area: 5,
+        title: `Attività Alternativa IRC “Cittadini del domani”`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 4ªB)`,
+        campuses: [`Foglianise`],
+        campusLabel: `Primaria Foglianise (Cl. 4ªB)`,
+        target: `Alunni non avvalentesi dell'IRC (Classe 4ªB)`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Eleonora Petrucciani`,
+        team: `E. Petrucciani`,
+        summary: `Attività alternativa IRC incentrata sull'ascolto di fiabe, educazione alla salute, cittadinanza attiva, rispetto delle regole comuni, cooperazione, solidarietà e valori dell'Agenda 2030.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-31`,
+        code: `CUR 31`,
+        type: `curricolare`,
+        area: 5,
+        title: `Alternativamente (Attività Alternativa IRC)`,
+        orders: [`Primaria`],
+        orderLabel: `Scuola Primaria (Cl. 3ªA)`,
+        campuses: [`Foglianise`],
+        campusLabel: `Primaria Foglianise (Cl. 3ªA)`,
+        target: `Alunni non avvalentesi dell'IRC (Classe 3ªA)`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Ilenia Russo`,
+        team: `I. Russo`,
+        summary: `Percorso su diritti e doveri del cittadino, temi ambientali, multiculturalità, etica, Agenda 2030 ed empatia con supporto digitale Raffaello Player.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-12`,
+        code: `CUR 12`,
+        type: `curricolare`,
+        area: 5,
+        title: `Attività Alternativa alla Religione Cattolica (Cl. II)`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado (Cl. II)`,
+        campuses: [`Cautano`],
+        campusLabel: `Secondaria Cautano (Classe II)`,
+        target: `Alunni non avvalentesi dell'IRC (Classe II)`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Federica Briante`,
+        team: `F. Briante`,
+        summary: `Percorso di approfondimento civico, etico e sociale alternativo all'insegnamento della religione cattolica.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-20`,
+        code: `CUR 20`,
+        type: `curricolare`,
+        area: 5,
+        title: `Attività Alternativa alla Religione Cattolica (Cautano / Villanacci)`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado`,
+        campuses: [`Cautano`],
+        campusLabel: `Secondaria Cautano / Villanacci`,
+        target: `Alunni non avvalentesi dell'IRC`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Mirella Caporaso`,
+        team: `M. Caporaso`,
+        summary: `Percorso di riflessione sui diritti umani, la tolleranza, la solidarietà e la convivenza civile.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      },
+      {
+        id: `CUR-37`,
+        code: `CUR 37`,
+        type: `curricolare`,
+        area: 5,
+        title: `Attività Alternative all’IRC (Cl. II B)`,
+        orders: [`Secondaria`],
+        orderLabel: `Scuola Secondaria di I Grado (Cl. II B)`,
+        campuses: [`Cautano`],
+        campusLabel: `Secondaria Cautano (Classe II B)`,
+        target: `Alunni non avvalentesi dell'IRC (Classe II B)`,
+        schedule: `Anno Scolastico 2026/2027`,
+        referenti: `Marinella Del Grosso`,
+        team: `M. Del Grosso`,
+        summary: `Laboratori di logica matematica, approfondimento tecnico-scientifico, lingua italiana ed etica e potenziamento metodologico per studenti non avvalentesi dell'IRC.`,
+        details: `Macro-Area 5 PTOF: Ambiente, Sostenibilità, Cittadinanza e Attività Alternative IRC.`
+      }
+    ];
+
+    /* ================= STATE ================= */
+    const state = {
+      type: `all`,
+      area: `all`,
+      order: `all`,
+      campus: `all`,
+      search: ``,
+      viewMode: `cards`,
+      sortField: `code`,
+      sortDir: `asc`,
+      expandedIds: new Set()
+    };
+
+    let macroChartInstance = null;
+
+    function getAreaMeta(areaId) {
+      return MACRO_AREAS.find(function (a) { return a.id === areaId; }) || MACRO_AREAS[0];
+    }
+
+    function matchesFilters(project, overrideArea) {
+      if (state.type !== `all` && project.type !== state.type) return false;
+      const areaToCheck = overrideArea !== undefined ? overrideArea : state.area;
+      if (areaToCheck !== `all` && String(project.area) !== String(areaToCheck)) return false;
+      if (state.order !== `all` && !project.orders.includes(state.order)) return false;
+      if (state.campus !== `all` && !project.campuses.includes(state.campus)) return false;
+      if (state.search.trim() !== ``) {
+        const q = state.search.trim().toLowerCase();
+        const hay = [
+          project.code,
+          project.title,
+          project.referenti,
+          project.team,
+          project.campusLabel,
+          project.orderLabel,
+          project.summary,
+          project.details
+        ].join(` `).toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    }
+
+    function getFilteredProjects() {
+      return PROJECTS.filter(function (p) { return matchesFilters(p); });
+    }
+
+    /* ================= CONTROLS / HANDLERS (HOISTED) ================= */
+    function setTypeFilter(typeVal) {
+      state.type = typeVal;
+      const map = {
+        all: `btn-type-all`,
+        extracurricolare: `btn-type-extra`,
+        curricolare: `btn-type-curr`
+      };
+      Object.keys(map).forEach(function (k) {
+        const btn = document.getElementById(map[k]);
+        if (btn) btn.setAttribute(`aria-pressed`, k === typeVal ? `true` : `false`);
+      });
+      renderAll();
+    }
+
+    function setViewMode(mode) {
+      state.viewMode = mode;
+      const btnCards = document.getElementById(`btn-view-cards`);
+      const btnTable = document.getElementById(`btn-view-table`);
+      if (btnCards) btnCards.setAttribute(`aria-pressed`, mode === `cards` ? `true` : `false`);
+      if (btnTable) btnTable.setAttribute(`aria-pressed`, mode === `table` ? `true` : `false`);
+      renderAll();
+    }
+
+    function setAreaQuickFilter(areaVal) {
+      state.area = String(areaVal);
+      const sel = document.getElementById(`filter-area`);
+      if (sel) sel.value = state.area;
+      renderAll();
+    }
+
+    function toggleCampusQuickFilter(campusName) {
+      state.campus = state.campus === campusName ? `all` : campusName;
+      const sel = document.getElementById(`filter-campus`);
+      if (sel) sel.value = state.campus;
+      renderAll();
+    }
+
+    function applyFilters() {
+      const areaEl = document.getElementById(`filter-area`);
+      const orderEl = document.getElementById(`filter-order`);
+      const campusEl = document.getElementById(`filter-campus`);
+      const searchEl = document.getElementById(`filter-search`);
+
+      if (areaEl) state.area = areaEl.value;
+      if (orderEl) state.order = orderEl.value;
+      if (campusEl) state.campus = campusEl.value;
+      if (searchEl) state.search = searchEl.value;
+      renderAll();
+    }
+
+    function resetAllFilters() {
+      state.type = `all`;
+      state.area = `all`;
+      state.order = `all`;
+      state.campus = `all`;
+      state.search = ``;
+
+      const areaEl = document.getElementById(`filter-area`);
+      const orderEl = document.getElementById(`filter-order`);
+      const campusEl = document.getElementById(`filter-campus`);
+      const searchEl = document.getElementById(`filter-search`);
+
+      if (areaEl) areaEl.value = `all`;
+      if (orderEl) orderEl.value = `all`;
+      if (campusEl) campusEl.value = `all`;
+      if (searchEl) searchEl.value = ``;
+
+      setTypeFilter(`all`);
+    }
+
+    function toggleCardDetails(projectId) {
+      if (state.expandedIds.has(projectId)) {
+        state.expandedIds.delete(projectId);
+      } else {
+        state.expandedIds.add(projectId);
+      }
+      const det = document.getElementById(`details-` + projectId);
+      const btn = document.getElementById(`expand-btn-` + projectId);
+      const isOpen = state.expandedIds.has(projectId);
+      if (det) {
+        det.classList.toggle(`is-open`, isOpen);
+      }
+      if (btn) {
+        btn.setAttribute(`aria-expanded`, isOpen ? `true` : `false`);
+        btn.textContent = isOpen ? `Chiudi dettagli` : `Scheda completa`;
+      }
+    }
+
+    function setSort(field) {
+      if (state.sortField === field) {
+        state.sortDir = state.sortDir === `asc` ? `desc` : `asc`;
+      } else {
+        state.sortField = field;
+        state.sortDir = `asc`;
+      }
+      renderAll();
+    }
+
+    /* ================= RENDERING ================= */
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`);
+    }
+
+    function buildProjectCard(p) {
+      const areaMeta = getAreaMeta(p.area);
+      const isExtra = p.type === `extracurricolare`;
+      const isOpen = state.expandedIds.has(p.id);
+      const typeTag = isExtra
+        ? `<span class="tag tag-extra">Extracurricolare</span>`
+        : `<span class="tag tag-curr">Curricolare</span>`;
+      const areaTag = `<span class="tag tag-area-` + p.area + `">Area ` + p.area + `</span>`;
+      const orderTag = `<span class="tag tag-order">` + escapeHtml(p.orderLabel) + `</span>`;
+
+      return `
+        <article class="project-card ` + (isExtra ? `is-extracurricolare` : ``) + `">
+          <div class="card-meta-top">
+            <span class="card-code">` + escapeHtml(p.code) + `</span>
+            <div class="card-badges">
+              ` + typeTag + areaTag + `
+            </div>
+          </div>
+          <h3 class="card-title">` + escapeHtml(p.title) + `</h3>
+          <div>` + orderTag + `</div>
+          <p class="card-summary">` + escapeHtml(p.summary) + `</p>
+          <div class="card-facts">
+            <div class="fact-row">
+              <span class="fact-key">Plessi</span>
+              <span class="fact-val">` + escapeHtml(p.campusLabel) + `</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-key">Referenti</span>
+              <span class="fact-val">` + escapeHtml(p.referenti) + `</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-key">Destinatari</span>
+              <span class="fact-val">` + escapeHtml(p.target) + `</span>
+            </div>
+            ` + (isExtra ? `
+            <div class="fact-row">
+              <span class="fact-key">Orari</span>
+              <span class="fact-val">` + escapeHtml(p.schedule) + `</span>
+            </div>` : ``) + `
+          </div>
+          <div class="card-footer">
+            <span class="dossier-meta">` + escapeHtml(areaMeta.shortLabel) + `</span>
+            <button type="button" class="expand-btn" id="expand-btn-` + p.id + `" aria-expanded="` + (isOpen ? `true` : `false`) + `" onclick="toggleCardDetails('` + p.id + `')">` + (isOpen ? `Chiudi dettagli` : `Scheda completa`) + `</button>
+          </div>
+          <div class="card-details ` + (isOpen ? `is-open` : ``) + `" id="details-` + p.id + `">
+            <p><strong>Macro-Area PTOF:</strong> ` + escapeHtml(areaMeta.fullLabel) + `</p>
+            <p><strong>Team di Progetto:</strong> ` + escapeHtml(p.team) + `</p>
+            <p><strong>Periodo:</strong> ` + escapeHtml(p.schedule) + `</p>
+            <p><strong>Note PTOF:</strong> ` + escapeHtml(p.details) + `</p>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderMacroPills() {
+      const bar = document.getElementById(`macro-pills-bar`);
+      if (!bar) return;
+
+      const allCount = PROJECTS.filter(function (p) { return matchesFilters(p, `all`); }).length;
+      let html = `
+        <button type="button" class="macro-pill-btn" aria-pressed="` + (state.area === `all` ? `true` : `false`) + `" onclick="setAreaQuickFilter('all')">
+          Tutte le Aree <span class="pill-count">(` + allCount + `)</span>
+        </button>
+      `;
+      MACRO_AREAS.forEach(function (area) {
+        const count = PROJECTS.filter(function (p) { return matchesFilters(p, area.id); }).length;
+        html += `
+          <button type="button" class="macro-pill-btn" aria-pressed="` + (String(state.area) === String(area.id) ? `true` : `false`) + `" onclick="setAreaQuickFilter('` + area.id + `')">
+            ` + area.id + `. ` + escapeHtml(area.shortLabel) + ` <span class="pill-count">(` + count + `)</span>
+          </button>
+        `;
+      });
+      bar.innerHTML = html;
+    }
+
+    function renderCampusMatrix() {
+      const container = document.getElementById(`campus-matrix`);
+      if (!container) return;
+
+      let html = ``;
+      CAMPUSES.forEach(function (campus) {
+        const extraC = PROJECTS.filter(function (p) { return p.type === `extracurricolare` && p.campuses.includes(campus); }).length;
+        const currC = PROJECTS.filter(function (p) { return p.type === `curricolare` && p.campuses.includes(campus); }).length;
+        const tot = extraC + currC;
+        const activeClass = state.campus === campus ? ` is-active` : ``;
+        html += `
+          <button type="button" class="campus-btn` + activeClass + `" aria-pressed="` + (state.campus === campus ? `true` : `false`) + `" onclick="toggleCampusQuickFilter('` + campus + `')">
+            <span>
+              <span class="campus-name">` + escapeHtml(campus) + `</span>
+              <span class="campus-breakdown">` + extraC + ` extracurricolari · ` + currC + ` curricolari</span>
+            </span>
+            <span class="campus-count">` + tot + `</span>
+          </button>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function renderChart() {
+      const canvas = document.getElementById(`macroAreaChart`);
+      if (!canvas || typeof Chart === `undefined`) return;
+
+      const styles = getComputedStyle(document.documentElement);
+      const data1 = styles.getPropertyValue(`--data-1`).trim() || `#1f4e5f`;
+      const data2 = styles.getPropertyValue(`--data-2`).trim() || `#d99000`;
+      const ink = styles.getPropertyValue(`--on-surface`).trim() || `#17181a`;
+      const muted = styles.getPropertyValue(`--on-surface-variant`).trim() || `#56585c`;
+      const gridColor = styles.getPropertyValue(`--outline-variant`).trim() || `#dedad0`;
+      const dimColor = styles.getPropertyValue(`--data-context`).trim() || `#c4bfb2`;
+
+      const labels = MACRO_AREAS.map(function (a) { return a.id + `. ` + a.shortLabel; });
+      const currCounts = MACRO_AREAS.map(function (a) {
+        return PROJECTS.filter(function (p) { return p.type === `curricolare` && p.area === a.id; }).length;
+      });
+      const extraCounts = MACRO_AREAS.map(function (a) {
+        return PROJECTS.filter(function (p) { return p.type === `extracurricolare` && p.area === a.id; }).length;
+      });
+
+      const currColors = MACRO_AREAS.map(function (a) {
+        if (state.area === `all` || String(state.area) === String(a.id)) return data1;
+        return dimColor;
+      });
+      const extraColors = MACRO_AREAS.map(function (a) {
+        if (state.area === `all` || String(state.area) === String(a.id)) return data2;
+        return dimColor;
+      });
+
+      if (macroChartInstance) {
+        macroChartInstance.data.datasets[0].data = currCounts;
+        macroChartInstance.data.datasets[0].backgroundColor = currColors;
+        macroChartInstance.data.datasets[1].data = extraCounts;
+        macroChartInstance.data.datasets[1].backgroundColor = extraColors;
+        macroChartInstance.update();
+        return;
+      }
+
+      macroChartInstance = new Chart(canvas, {
+        type: `bar`,
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: `Curricolari`,
+              data: currCounts,
+              backgroundColor: currColors,
+              borderRadius: 2
+            },
+            {
+              label: `Extracurricolari`,
+              data: extraCounts,
+              backgroundColor: extraColors,
+              borderRadius: 2
+            }
+          ]
+        },
+        options: {
+          indexAxis: `y`,
+          responsive: true,
+          maintainAspectRatio: false,
+          onClick: function (_evt, elements) {
+            if (elements && elements.length > 0) {
+              const idx = elements[0].index;
+              const clickedArea = String(MACRO_AREAS[idx].id);
+              setAreaQuickFilter(state.area === clickedArea ? `all` : clickedArea);
+            }
+          },
+          scales: {
+            x: {
+              stacked: true,
+              beginAtZero: true,
+              ticks: {
+                stepSize: 5,
+                color: muted,
+                font: { family: `Geist Mono, monospace`, size: 11 }
+              },
+              grid: { color: gridColor }
+            },
+            y: {
+              stacked: true,
+              ticks: {
+                color: ink,
+                font: { family: `Plus Jakarta Sans, sans-serif`, size: 12, weight: `600` }
+              },
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                footer: function (items) {
+                  const total = items.reduce(function (acc, item) { return acc + item.parsed.x; }, 0);
+                  return `Totale Macro-Area: ` + total + ` progetti`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderCatalog(filtered) {
+      const secExtra = document.getElementById(`section-extracurricolari`);
+      const secCurr = document.getElementById(`section-curricolari`);
+      const secTable = document.getElementById(`section-table`);
+      const secEmpty = document.getElementById(`section-empty`);
+
+      const gridExtra = document.getElementById(`grid-extracurricolari`);
+      const groupsCurr = document.getElementById(`curricolari-groups`);
+      const tableBody = document.getElementById(`table-body`);
+
+      const extraCountMeta = document.getElementById(`extra-count-meta`);
+      const currCountMeta = document.getElementById(`curr-count-meta`);
+      const tableCountMeta = document.getElementById(`table-count-meta`);
+
+      if (!secExtra || !secCurr || !secTable || !secEmpty) return;
+
+      if (filtered.length === 0) {
+        secExtra.classList.add(`is-hidden`);
+        secCurr.classList.add(`is-hidden`);
+        secTable.classList.add(`is-hidden`);
+        secEmpty.classList.remove(`is-hidden`);
+        return;
+      }
+
+      secEmpty.classList.add(`is-hidden`);
+
+      if (state.viewMode === `table`) {
+        secExtra.classList.add(`is-hidden`);
+        secCurr.classList.add(`is-hidden`);
+        secTable.classList.remove(`is-hidden`);
+
+        if (tableCountMeta) {
+          tableCountMeta.textContent = filtered.length + ` progetti visualizzati`;
+        }
+
+        const sorted = filtered.slice().sort(function (a, b) {
+          let valA = ``;
+          let valB = ``;
+          if (state.sortField === `code`) {
+            valA = a.code;
+            valB = b.code;
+          } else if (state.sortField === `title`) {
+            valA = a.title;
+            valB = b.title;
+          } else if (state.sortField === `type`) {
+            valA = a.type;
+            valB = b.type;
+          } else if (state.sortField === `area`) {
+            valA = String(a.area);
+            valB = String(b.area);
+          }
+          const cmp = valA.localeCompare(valB, `it`);
+          return state.sortDir === `asc` ? cmp : -cmp;
+        });
+
+        [`code`, `title`, `type`, `area`].forEach(function (f) {
+          const ind = document.getElementById(`sort-ind-` + f);
+          if (ind) {
+            ind.textContent = state.sortField === f ? (state.sortDir === `asc` ? `↑` : `↓`) : ``;
+          }
+        });
+
+        if (tableBody) {
+          tableBody.innerHTML = sorted.map(function (p) {
+            const areaMeta = getAreaMeta(p.area);
+            const badge = p.type === `extracurricolare`
+              ? `<span class="tag tag-extra">Extracurricolare</span>`
+              : `<span class="tag tag-curr">Curricolare</span>`;
+            return `
+              <tr>
+                <td><span class="card-code">` + escapeHtml(p.code) + `</span></td>
+                <td>
+                  <div class="table-title-cell">` + escapeHtml(p.title) + `</div>
+                  <div class="card-summary">` + escapeHtml(p.summary) + `</div>
+                </td>
+                <td>` + badge + `</td>
+                <td><span class="tag tag-area-` + p.area + `">Area ` + p.area + `</span><br><small>` + escapeHtml(areaMeta.shortLabel) + `</small></td>
+                <td><strong>` + escapeHtml(p.orderLabel) + `</strong><br><small>` + escapeHtml(p.campusLabel) + `</small></td>
+                <td>` + escapeHtml(p.referenti) + `</td>
+              </tr>
+            `;
+          }).join(``);
+        }
+        return;
+      }
+
+      /* Cards view */
+      secTable.classList.add(`is-hidden`);
+      const extraList = filtered.filter(function (p) { return p.type === `extracurricolare`; });
+      const currList = filtered.filter(function (p) { return p.type === `curricolare`; });
+
+      if (extraList.length > 0) {
+        secExtra.classList.remove(`is-hidden`);
+        if (extraCountMeta) {
+          extraCountMeta.textContent = extraList.length + (extraList.length === 1 ? ` progetto` : ` progetti`);
+        }
+        if (gridExtra) {
+          gridExtra.innerHTML = extraList.map(buildProjectCard).join(``);
+        }
+      } else {
+        secExtra.classList.add(`is-hidden`);
+      }
+
+      if (currList.length > 0) {
+        secCurr.classList.remove(`is-hidden`);
+        if (currCountMeta) {
+          currCountMeta.textContent = currList.length + (currList.length === 1 ? ` progetto` : ` progetti`) + ` nelle Macro-Aree PTOF`;
+        }
+        if (groupsCurr) {
+          let groupsHtml = ``;
+          MACRO_AREAS.forEach(function (area) {
+            const areaProjects = currList.filter(function (p) { return p.area === area.id; });
+            if (areaProjects.length === 0) return;
+            groupsHtml += `
+              <div class="macro-group">
+                <div class="macro-group-header">
+                  <div class="macro-group-title-wrap">
+                    <span class="index-num">0` + area.id + `</span>
+                    <h3 class="macro-group-title">` + escapeHtml(area.fullLabel) + `</h3>
+                  </div>
+                  <span class="macro-group-count">` + areaProjects.length + (areaProjects.length === 1 ? ` progetto curricolare` : ` progetti curricolari`) + `</span>
+                </div>
+                <p class="section-desc" style="margin-bottom: var(--space-md);">` + escapeHtml(area.desc) + `</p>
+                <div class="card-grid">
+                  ` + areaProjects.map(buildProjectCard).join(``) + `
+                </div>
+              </div>
+            `;
+          });
+          groupsCurr.innerHTML = groupsHtml;
+        }
+      } else {
+        secCurr.classList.add(`is-hidden`);
+      }
+    }
+
+    function renderSummary(filtered) {
+      const summaryEl = document.getElementById(`results-summary`);
+      const resetBtn = document.getElementById(`btn-reset-filters`);
+
+      const extraC = filtered.filter(function (p) { return p.type === `extracurricolare`; }).length;
+      const currC = filtered.filter(function (p) { return p.type === `curricolare`; }).length;
+
+      if (summaryEl) {
+        summaryEl.innerHTML = `Visualizzazione di <strong>` + filtered.length + `</strong> su <strong>` + PROJECTS.length + `</strong> progetti (` + extraC + ` extracurricolari · ` + currC + ` curricolari)`;
+      }
+
+      const hasFilters = state.type !== `all` || state.area !== `all` || state.order !== `all` || state.campus !== `all` || state.search.trim() !== ``;
+      if (resetBtn) {
+        resetBtn.disabled = !hasFilters;
+      }
+    }
+
+    function renderAll() {
+      const filtered = getFilteredProjects();
+      renderSummary(filtered);
+      renderMacroPills();
+      renderCampusMatrix();
+      renderChart();
+      renderCatalog(filtered);
+    }
+
+    document.addEventListener(`DOMContentLoaded`, function () {
+      renderAll();
+      if (typeof lucide !== `undefined` && typeof lucide.createIcons === `function`) {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
